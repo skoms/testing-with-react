@@ -1,5 +1,6 @@
 import React from 'react';
 import { screen, render } from '@testing-library/react';
+import { expectNoPropTypeErrors } from '../../utils/testing';
 import Headline from './Headline';
 
 const renderComponent = (props = {}) => {
@@ -7,6 +8,30 @@ const renderComponent = (props = {}) => {
 }
 
 describe('Headline', () => {
+
+  describe('checking our prop types', () => {
+    
+    it('should not throw a warning', () => {
+      
+      const expectedProps = {
+        header: 'test header',
+        desc: 'test desc',
+        tempArray: [
+          {
+            fName: 'test fname',
+            lName: 'test lname',
+            email: 'test email',
+            age: 17,
+            onlineStatus: true
+          }
+        ]
+      }
+
+      expectNoPropTypeErrors(Headline, expectedProps);
+    });
+    
+
+  });
   
   describe('Have props', () => {
 
