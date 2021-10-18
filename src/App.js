@@ -1,6 +1,10 @@
 import React from 'react';
 import Header from './component/header/Header';
 import Headline from './component/headline/Headline';
+import Button from './component/button/Button';
+import Post from './component/post/Post';
+import { getPosts, selectPosts } from './component/posts/postsSlice'
+import { useSelector, useDispatch } from 'react-redux';
 import './styles/global.css';
 
 const tempArray = [
@@ -13,7 +17,14 @@ const tempArray = [
   },
 ]
 
-const App = () => {
+const App = (props) => {
+  const dispatch = useDispatch();
+  const posts = useSelector(selectPosts);
+
+  const fetch = async () => {
+    await dispatch(getPosts());
+  }
+
   return (
     <div className="App">
       <Header />      
@@ -23,6 +34,21 @@ const App = () => {
           desc='Click the button to render posts' 
           tempArray={tempArray}
         />
+        <Button 
+          buttonText='Get posts'
+          emitEvent={fetch}
+        />
+        { posts.length > 0 && 
+          <div>
+            {posts.map( post => 
+              <Post 
+                key={post.id}
+                title={post.title}
+                desc={post.body}
+              />
+            )}
+          </div>
+        }
       </main>
     </div>
   );

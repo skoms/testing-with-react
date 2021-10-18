@@ -40,6 +40,7 @@
     ]
   },
   "devDependencies": {
-    "jest-prop-type-error": "^1.1.0"
+    "jest-prop-type-error": "^1.1.0",
+    "moxios": "^0.4.0"
   }
 }

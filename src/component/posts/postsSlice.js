@@ -10,7 +10,9 @@ export const getPosts = createAsyncThunk(
   async () => {
     const response = await axios.get(
       'https://jsonplaceholder.typicode.com/posts?_limit=10'
-    );
+    )
+      .then(res => ({ status: res.status, data: res.data }))
+      .catch(res => ({ status: res.status, error: res.error }));
     return response;
   }
 );
@@ -35,5 +37,7 @@ export const postsSlice = createSlice({
 })
 
 export const { addPost } = postsSlice.actions;
+
+export const selectPosts = state => state.posts.posts;
 
 export default postsSlice.reducer;
