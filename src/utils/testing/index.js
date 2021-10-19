@@ -7,8 +7,9 @@ export const expectNoPropTypeErrors = (component, expectedProps) => {
   PropTypes.checkPropTypes(component.propTypes, expectedProps, 'props', component.name);
 }
 
-export const testStore = () => {
+export const testStore = (preloadedState) => {
   return configureStore({
-    reducer: reducers
+    reducer: reducers,
+    preloadedState,
   });
 };

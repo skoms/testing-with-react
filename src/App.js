@@ -6,6 +6,7 @@ import Post from './component/post/Post';
 import { getPosts, selectPosts } from './component/posts/postsSlice'
 import { useSelector, useDispatch } from 'react-redux';
 import './styles/global.css';
+import { uuid } from 'uuidv4'
 
 const tempArray = [
   {
@@ -26,7 +27,7 @@ const App = (props) => {
   }
 
   return (
-    <div className="App">
+    <div className="App" data-testid='app-component'>
       <Header />      
       <main>
         <Headline 
@@ -42,7 +43,7 @@ const App = (props) => {
           <div>
             {posts.map( post => 
               <Post 
-                key={post.id}
+                key={uuid()}
                 title={post.title}
                 desc={post.body}
               />
