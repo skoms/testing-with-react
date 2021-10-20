@@ -40,7 +40,6 @@ describe('Button', () => {
   });
 
   describe('Event', () => {
-    let button;
 
     beforeEach(() => {
       const props = {
@@ -48,7 +47,6 @@ describe('Button', () => {
         emitEvent: clickHandler
       }
       render(<Button {...props} />)
-      button = screen.getByRole('button', { name: /test button text/i });
     });
 
     afterEach(() => {
@@ -56,6 +54,7 @@ describe('Button', () => {
     });
 
     it('should call the emitEvent on click', () => {
+      const button = screen.getByRole('button', { name: /test button text/i });
       userEvent.click(button);
       expect(
         clickHandler
@@ -63,13 +62,15 @@ describe('Button', () => {
     });
 
     it('should call emitEvent the correct number of times', () => {
+      const button = screen.getByRole('button', { name: /test button text/i });
       userEvent.click(button);
       userEvent.click(button);
       userEvent.click(button);
       expect(
         clickHandler
       ).toHaveBeenCalledTimes(3);
-    });    
+    });
+    
     
   });
 

@@ -1,6 +1,11 @@
+import React from 'react';
 import moxios from 'moxios';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { testStore } from '../utils/testing';
 import { getPosts } from '../component/posts/postsSlice';
+import App from '../App';
+import { Provider } from 'react-redux';
 
 describe('getPosts Async Thunk', () => {
   
@@ -46,5 +51,27 @@ describe('getPosts Async Thunk', () => {
       });
 
   });
+  
+});
+
+describe('Get Posts button disappears after click', () => {
+
+  beforeEach(() => {
+    render(
+      <Provider store={testStore()}>
+        <App />
+      </Provider>
+    );
+  });
+  
+
+  it('hides the button after pressing it', () => {
+    const button = screen.getByRole('button', /get posts/i);
+    userEvent.click(button);
+    expect(
+      button
+    ).not.toBeVisible();
+  });
+  
   
 });

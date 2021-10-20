@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Header from './component/header/Header';
 import Headline from './component/headline/Headline';
 import Button from './component/button/Button';
@@ -6,7 +6,7 @@ import Post from './component/post/Post';
 import { getPosts, selectPosts } from './component/posts/postsSlice'
 import { useSelector, useDispatch } from 'react-redux';
 import './styles/global.css';
-import { uuid } from 'uuidv4'
+import { v4 as uuidv4 } from 'uuid';
 
 const tempArray = [
   {
@@ -22,7 +22,10 @@ const App = (props) => {
   const dispatch = useDispatch();
   const posts = useSelector(selectPosts);
 
+  const [displayButton, setDisplayButton] = useState(true)
+
   const fetch = async () => {
+    setDisplayButton(false);
     await dispatch(getPosts());
   }
 
@@ -35,15 +38,17 @@ const App = (props) => {
           desc='Click the button to render posts' 
           tempArray={tempArray}
         />
-        <Button 
-          buttonText='Get posts'
-          emitEvent={fetch}
-        />
+        {displayButton && 
+          <Button 
+            buttonText='Get posts'
+            emitEvent={fetch}
+          />
+        }
         { posts.length > 0 && 
           <div>
             {posts.map( post => 
               <Post 
-                key={uuid()}
+                key={uuidv4()}
                 title={post.title}
                 desc={post.body}
               />
